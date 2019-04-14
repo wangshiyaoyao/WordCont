@@ -7,7 +7,7 @@ import unittest
 from xeger import Xeger
 import WordCont
 
-temp_file = '.test.txt'
+TEMP_FILE = '.test.txt'
 
 
 def touch_test_file(line_num, word_num):
@@ -23,18 +23,18 @@ def touch_test_file(line_num, word_num):
     result = {'chars': 0, 'words': word_num * line_num, 'lines': line_num, 'container': {}}
 
     # 创建文件，随机生成字符
-    fd = open(temp_file, 'w')
-    for line in range(line_num):
-        for i in range(word_num):
+    file_obj = open(TEMP_FILE, 'w')
+    for _ in range(line_num):
+        for _ in range(word_num):
             word = words()
             chars = word + separator() + non_word() + separator()
             result['chars'] += len(chars)
             result['container'][word.lower()] = result['container'].get(word.lower(), 0) + 1
-            fd.write(chars)
+            file_obj.write(chars)
         chars = space()
         result['chars'] += len(chars)
-        fd.write(chars)
-    fd.close()
+        file_obj.write(chars)
+    file_obj.close()
 
     # 获取排序后的词频结果
     sort_result = sorted(result['container'].items(), key=lambda x: (-x[1], x[0]))[:10]
@@ -63,7 +63,7 @@ class TestWordCont(unittest.TestCase):
 
 
 result = touch_test_file(100, 40)
-handle = WordCont.FileHandle(temp_file)
+handle = WordCont.FileHandle(TEMP_FILE)
+os.remove(TEMP_FILE)
 if __name__ == '__main__':
     unittest.main()
-    os.remove(temp_file)

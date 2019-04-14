@@ -33,8 +33,8 @@ def _word_check_in_line(line):
 def _file_check(filename):
     """判断参数是一个可读文件，否则报错"""
     try:
-        fd = open(filename)
-        fd.close()
+        file_obj = open(filename)
+        file_obj.close()
     except IOError:
         logging.error("Invalid argument.\nNeed a readable file.")
         sys.exit(1)
@@ -122,4 +122,3 @@ def main(filename):
 
 if __name__ == '__main__':
     main(get_argv())
-
